@@ -1,0 +1,78 @@
+#include <LiquidCrystal.h>
+#include <stdio.h>
+LiquidCrystal lcd(6, 7, 8, 9, 10, 11);
+char gchr='x';
+int sti=0;
+String inputString = ""; // a string to hold incoming data
+boolean stringComplete = false; // whether the string is complete
+int m1a = 12;
+int m1b = 13;
+int m2a = 11;
+int m2b = 10;
+int mental = 8;
+int buzzer = 9;
+void setup()
+{
+Serial.begin(9600);serialEvent();
+// mySerial.begin(9600);
+52
+pinMode(m1a, OUTPUT);
+pinMode(m1b, OUTPUT);
+pinMode(m2a, OUTPUT);
+pinMode(m2b, OUTPUT);
+pinMode(buzzer, OUTPUT);
+pinMode(metal, INPUT);
+digitalWrite(m1a, LOW);
+digitalWrite(m1b, LOW);
+digitalWrite(m2a, LOW);
+digitalWrite(m2b, LOW);
+digitalWrite(relay1, LOW);
+digitalWrite(relay2, LOW);
+digitalWrite(relay3, LOW);
+lcd.begin(16, 2);
+lcd.print("Bomb detection Robot");
+delay(2000);
+serialEvent();
+}
+void loop()
+{
+53
+delay(1000);
+}
+void serialEvent()
+{
+while (Serial.available())
+{
+char gchr = (char)Serial.read();
+Serial.write(gchr);
+if(gchr == 'f')
+{gchr='x';lcd.clear();lcd.print("Front ");
+digitalWrite(m1a, HIGH);digitalWrite(m1b, LOW);
+digitalWrite(m2a, HIGH);digitalWrite(m2b, LOW);
+}
+if(gchr == 'b')
+{gchr='x';lcd.clear();lcd.print("Back ");
+digitalWrite(m1a, LOW);digitalWrite(m1b, HIGH);
+digitalWrite(m2a, LOW);digitalWrite(m2b, HIGH);
+}
+if(gchr == 'r')
+{gchr='x';lcd.clear();lcd.print("Right ");
+digitalWrite(m2a, HIGH);digitalWrite(m2b, LOW);
+digitalWrite(m1a, LOW);digitalWrite(m1b, HIGH);
+}
+if(gchr == 'l')
+{gchr='x';lcd.clear();lcd.print("Left ");
+54
+digitalWrite(m2a, LOW);digitalWrite(m2b, HIGH);
+digitalWrite(m1a, HIGH);digitalWrite(m1b, LOW);
+}
+if(gchr == 's')
+{gchr='x';lcd.clear();lcd.print("Stop ");
+digitalWrite(m1a, LOW);digitalWrite(m1b, LOW);
+digitalWrite(m2a, LOW);digitalWrite(m2b, LOW);
+}
+if(digitalRead(metal) == HIGH)
+lcd.print(" METAL DETECTED");
+digitalWrite(buzzer,HIGH);
+}
+}
